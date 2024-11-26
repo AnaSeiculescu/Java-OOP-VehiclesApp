@@ -8,17 +8,17 @@ abstract class Opel extends Car {
 		this.model = model;
 	}
 
-//	@Override
-//	public double drive(double distance) {
-//		System.out.println("you are now driving in gear: " + changedGear);
-//		consumptionStats = 0.01 * (distance * (consumptionPer100Km - 0.03 * consumptionPer100Km * (changedGear - 1)));
-//		return consumptionStats;
-////		availableFuel = fuelTankSize - consumptionStats;
-//	}
-//
-//	@Override
-//	public void stop(){
-//		availableFuel = getAvailableFuel();
-//		System.out.println("Your car has Stopped now. Available fuel: " + availableFuel + ", fuel consumption: " + consumptionStats);
-//	}
+	@Override
+	public double drive(double distance) {
+//		Consumption decreases with 3% as the gear increases with 1
+		double adjustedConsumptionPer100Km = consumptionPer100Km - 0.03 * consumptionPer100Km * (changedGear - 1);
+		double consumptionForDistance = 0.01 * (distance * adjustedConsumptionPer100Km);
+		consumptionStats += consumptionForDistance;
+		availableFuel -= consumptionForDistance;
+
+		System.out.println("consumption stats: " + adjustValue(consumptionStats, 3));
+		System.out.println("For the latest distance of: " + distance + "Km you have consumed: " + adjustValue(consumptionForDistance, 3) + ", available fuel: " + adjustValue(availableFuel, 3));
+//		System.out.println("available fuel: " + adjustValue(availableFuel, 3));
+		return consumptionStats;
+	}
 }

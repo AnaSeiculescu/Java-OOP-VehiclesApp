@@ -6,7 +6,7 @@ public class Main {
 //		Car car = new Car(); // this should not compile.
 //		Car car = new Opel(27, "oiqe0934hkkadsn"); // this should not compile! If I want to create an Opel car, I will need to create an instance of an Opel model.
 
-		Car car = new Corsa(27, "oiqe0934hkkadsn"); // Corsa extendd from Opel, while Opel extends from Car
+		Car car = new Corsa(37, "oiqe0934hkkadsn"); // Corsa extendd from Opel, while Opel extends from Car
 		car.start();
 		car.shiftGear(1);
 		car.drive(0.1); // drives 0.01 KMs

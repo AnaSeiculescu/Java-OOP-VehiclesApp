@@ -21,7 +21,12 @@ abstract class Car implements Vehicle {
 		this.gear = gear;
 		this.fuelType = fuelType;
 		this.fuelTankSize = fuelTankSize;
-		this.availableFuel = availableFuel;
+		if (availableFuel > fuelTankSize) {
+			System.out.println("Alert: Available fuel you entered (" + availableFuel + ") exceeds the fuel tank size (" + fuelTankSize + "). Setting the available fuel to fuel tank size");
+			this.availableFuel = fuelTankSize;
+		} else {
+			this.availableFuel = availableFuel;
+		}
 		this.chassisNumber = chassisNumber;
 	}
 
@@ -36,7 +41,7 @@ abstract class Car implements Vehicle {
 
 	public void shiftGear(int newGear) {
 		changedGear = newGear;
-		System.out.println("You are now in gear " + changedGear + ", available fuel: " + availableFuel);
+		System.out.println("You are now in gear " + changedGear + ", available fuel: " + adjustValue(availableFuel, 3));
 //		return changedGear;
 	}
 
@@ -47,26 +52,14 @@ abstract class Car implements Vehicle {
 	}
 
 	@Override
-	public double drive(double distance) {
-//		Consumption decreases with 3% as the gear increases with 1
-		double adjustedConsumptionPer100Km = consumptionPer100Km - 0.03 * consumptionPer100Km * (changedGear - 1);
-		double consumptionForDistance = 0.01 * (distance * adjustedConsumptionPer100Km);
-		consumptionStats += consumptionForDistance;
-		availableFuel -= consumptionForDistance;
-
-		System.out.println("consumption stats: " + consumptionStats);
-		System.out.println("For the latest distance of: " + distance + "Km you have consumed: " + consumptionForDistance);
-		System.out.println("available fuel: " + availableFuel);
-		return consumptionStats;
-	}
-
-	@Override
 	public void stop(){
-		System.out.println("Your car has Stopped now. Available fuel: " + availableFuel + ", fuel consumption from last start: " + consumptionStats);
+		System.out.println("Your car has Stopped now. Available fuel: " + adjustValue(availableFuel, 3) + ", fuel consumption from last start: " + adjustValue(consumptionStats, 3));
 	}
 
 	public double adjustValue(double value, int places) {
 		double scale = Math.pow(10, places);
 		return Math.round(value * scale) / scale;
 	}
+
+
 }
