@@ -13,16 +13,15 @@ abstract class Volvo extends Car {
 		double adjustedConsumptionPer100Km = 0;
 		if (tireSize == 15) {
 			//		Consumption decreases by 4% as the gear increases with 1
-			adjustedConsumptionPer100Km = consumptionPer100Km - 0.04 * consumptionPer100Km * (changedGear - 1);
+			//		adjustedConsumptionPer100Km = consumptionPer100Km - 0.04 * consumptionPer100Km * (changedGear - 1);
+			adjustedConsumptionPer100Km = consumptionPer100Km * (1 - 0.04 * (changedGear - 1));
 		} else {
 			//		Consumption increases by 2% with every increased tire size
-			double consumptionIfLargerTires = 0.02 * (tireSize - 15);
+			double consumptionIfLargerTires = 0.02 * (tireSize - 15) * consumptionPer100Km;
 			adjustedConsumptionPer100Km = consumptionPer100Km - 0.04 * consumptionPer100Km * (changedGear - 1) + consumptionIfLargerTires;
 		}
 
-
 		double consumptionForDistance = 0.01 * (distance * adjustedConsumptionPer100Km);
-
 		consumptionStats += consumptionForDistance;
 		availableFuel -= consumptionForDistance;
 
