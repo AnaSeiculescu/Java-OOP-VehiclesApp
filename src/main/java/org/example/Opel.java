@@ -10,8 +10,8 @@ abstract class Opel extends Car {
 
 	@Override
 	public void drive(double distance) {
-        //		Consumption decreases with 3% as the gear increases with 1
-		double adjustedConsumptionPer100Km = consumptionPer100Km - 0.03 * consumptionPer100Km * (changedGear - 1);
+        //		Consumption decreases by 6% as the gear increases with 1
+		double adjustedConsumptionPer100Km = consumptionPer100Km - 0.06 * consumptionPer100Km * (changedGear - 1);
 		double consumptionForDistance = 0.01 * (distance * adjustedConsumptionPer100Km);
 
 		consumptionStats += consumptionForDistance;

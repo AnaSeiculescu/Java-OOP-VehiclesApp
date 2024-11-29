@@ -10,8 +10,17 @@ abstract class Volvo extends Car {
 
 	@Override
 	public void drive(double distance) {
-		//		Consumption decreases with 1% as the gear increases with 1
-		double adjustedConsumptionPer100Km = consumptionPer100Km - 0.01 * consumptionPer100Km * (changedGear - 1);
+		double adjustedConsumptionPer100Km = 0;
+		if (tireSize == 15) {
+			//		Consumption decreases by 4% as the gear increases with 1
+			adjustedConsumptionPer100Km = consumptionPer100Km - 0.04 * consumptionPer100Km * (changedGear - 1);
+		} else {
+			//		Consumption increases by 2% with every increased tire size
+			double consumptionIfLargerTires = 0.02 * (tireSize - 15);
+			adjustedConsumptionPer100Km = consumptionPer100Km - 0.04 * consumptionPer100Km * (changedGear - 1) + consumptionIfLargerTires;
+		}
+
+
 		double consumptionForDistance = 0.01 * (distance * adjustedConsumptionPer100Km);
 
 		consumptionStats += consumptionForDistance;
